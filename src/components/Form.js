@@ -3,32 +3,49 @@ import FormDetails from "./FormDetails";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { addAddress } from "../utils/ApiActions";
 
 const schema = yup.object().shape({
-  firstName: yup.string().required("First Name should be required please"),
-  lastName: yup.string().required(),
-  email: yup.string().email().required(),
-  age: yup.number().positive().integer().required(),
-  password: yup.string().min(4).max(15).required(),
-  confirmPassword: yup.string().oneOf([yup.ref("password"), null]),
+  name: yup.string().required("Name field required"),
+  address: yup.string().required("Address field required"),
+  apartmentNo: yup
+    .number()
+    .typeError("Apartment no. field required")
+    .min(0)
+    .integer()
+    .required(),
+  floorNo: yup
+    .number()
+    .typeError("Floor no. field required")
+    .min(0)
+    .integer()
+    .required(),
+  city: yup.string().required("City field required"),
 });
 
-export default function Form() {
+export default function Form({ cities, handleNewAddress }) {
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
 
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (data) => {
+    handleNewAddress(data);
+    // addAddress(data);
+    console.log(data, "data");
+  };
 
-  console.log(watch("email"));
   return (
     <FormDetails
       register={register}
       errors={errors}
       handleSubmit={handleSubmit(onSubmit)}
+      watch={watch}
+      cities={cities}
     />
   );
 }

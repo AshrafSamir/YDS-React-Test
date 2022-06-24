@@ -13,13 +13,14 @@ import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import Logo from "../assets/Logo.jpg";
 
-const Form = ({ handleSubmit, register, errors }) => {
+const Form = ({ handleSubmit, register, errors, watch, cities }) => {
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <Box
         sx={{
-          marginTop: 8,
+          marginTop: 1,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -31,7 +32,7 @@ const Form = ({ handleSubmit, register, errors }) => {
         </Typography>
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
           <TextField
-            {...register("name", { required: true })}
+            {...register("name")}
             margin="normal"
             fullWidth
             id="name"
@@ -39,50 +40,54 @@ const Form = ({ handleSubmit, register, errors }) => {
             name="name"
             autoFocus
           />
+          {errors.name?.message}
           <TextField
-            {...register("address", { required: true })}
+            {...register("address")}
             margin="normal"
             fullWidth
             name="address"
             label="Address"
             id="address"
           />
-
+          {errors.address?.message}
           <TextField
-            {...register("apartmentNo", { required: true })}
+            {...register("apartmentNo")}
             margin="normal"
             fullWidth
-            name="apartment no"
-            label="Apartment no"
+            name="apartmentNo"
+            label="Apartment no."
             type="number"
             id="apartment no"
           />
-
+          {errors.apartmentNo?.message}
           <TextField
-            {...register("floorNo", { required: true })}
+            {...register("floorNo")}
             margin="normal"
             fullWidth
-            name="floor no"
-            label="Floor no"
+            name="floorNo"
+            label="Floor no."
             type="number"
             id="floor no"
           />
-
+          {errors.floorNo?.message}
           <FormControl margin="normal" fullWidth>
             <InputLabel id="demo-simple-select-label">City</InputLabel>
             <Select
-              {...register("city", { required: true })}
+              {...register("city")}
+              defaultValue=""
               labelId="demo-simple-select-label"
               id="demo-simple-select"
               name="city"
               label="City"
             >
-              <MenuItem>Ten</MenuItem>
-              <MenuItem>Twenty</MenuItem>
-              <MenuItem>Thirty</MenuItem>
+              {cities?.map((city) => (
+                <MenuItem key={city.id} value={city.name}>
+                  {city.name}
+                </MenuItem>
+              ))}
             </Select>
           </FormControl>
-          {errors.email && <span>This field is required</span>}
+          {errors.city?.message}
           <Button
             type="submit"
             fullWidth
