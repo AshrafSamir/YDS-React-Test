@@ -1,0 +1,15 @@
+.App {
+ display:flex;
+ flex-direction: column;
+ align-items: center;
+ justify-content: center;
+  text-align: center;
+  width: 100%;
+}
+
+.divider {
+  width: 90%;
+  border-bottom: 1px solid #88888880;
+  margin-top: 20px ;
+  margin-bottom: 20px;
+}
