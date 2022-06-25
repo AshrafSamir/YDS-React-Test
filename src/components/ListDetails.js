@@ -30,10 +30,10 @@ function Row({ address, handleEdit, handleDelete }) {
         <TableCell component="th" scope="row">
           {address?.name}
         </TableCell>
-        <TableCell align="right">{address?.address?.street}</TableCell>
-        <TableCell align="right">{1}</TableCell>
-        <TableCell align="right">{2}</TableCell>
-        <TableCell align="right">{address?.address?.city}</TableCell>
+        <TableCell align="right">{address?.description}</TableCell>
+        <TableCell align="right">{address?.apartment_number}</TableCell>
+        <TableCell align="right">{address?.floor_number}</TableCell>
+        <TableCell align="right">{address?.area}</TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -42,10 +42,8 @@ function Row({ address, handleEdit, handleDelete }) {
               <Button
                 sx={{ margin: 1 }}
                 align="right"
-                variant="outlined"
-                color="success"
-                id={address.id}
-                onClick={(event) => handleEdit(event)}
+                variant="contained"
+                onClick={() => handleEdit(address)}
               >
                 Edit
               </Button>
@@ -54,8 +52,7 @@ function Row({ address, handleEdit, handleDelete }) {
                 align="right"
                 variant="contained"
                 color="error"
-                id={address.id}
-                onClick={(event) => handleDelete(event)}
+                onClick={() => handleDelete(address)}
               >
                 Delete
               </Button>
@@ -67,13 +64,7 @@ function Row({ address, handleEdit, handleDelete }) {
   );
 }
 
-export default function ListDetails({
-  addressList,
-  open,
-  setOpen,
-  handleEdit,
-  handleDelete,
-}) {
+export default function ListDetails({ addressList, handleEdit, handleDelete }) {
   return (
     <TableContainer component={Paper}>
       <Table aria-label="collapsible table">

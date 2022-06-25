@@ -13,8 +13,7 @@ import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import Logo from "../assets/Logo.jpg";
 
-const Form = ({ handleSubmit, register, errors, watch, cities }) => {
-
+const Form = ({ handleSubmit, register, errors, cities }) => {
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -38,56 +37,72 @@ const Form = ({ handleSubmit, register, errors, watch, cities }) => {
             id="name"
             label="Name"
             name="name"
-            autoFocus
+            InputLabelProps={{
+              shrink: true,
+            }}
           />
           {errors.name?.message}
           <TextField
-            {...register("address")}
+            {...register("description")}
             margin="normal"
             fullWidth
-            name="address"
+            name="description"
             label="Address"
-            id="address"
+            id="description"
+            InputLabelProps={{
+              shrink: true,
+            }}
           />
-          {errors.address?.message}
+          {errors.description?.message}
           <TextField
-            {...register("apartmentNo")}
+            {...register("apartment_number")}
             margin="normal"
             fullWidth
-            name="apartmentNo"
+            name="apartment_number"
             label="Apartment no."
             type="number"
-            id="apartment no"
+            id="apartment_number"
+            InputLabelProps={{
+              shrink: true,
+            }}
           />
-          {errors.apartmentNo?.message}
+          {errors.apartment_number?.message}
           <TextField
-            {...register("floorNo")}
+            {...register("floor_number")}
             margin="normal"
             fullWidth
-            name="floorNo"
+            name="floor_number"
             label="Floor no."
             type="number"
-            id="floor no"
+            id="floor_number"
+            InputLabelProps={{
+              shrink: true,
+            }}
           />
-          {errors.floorNo?.message}
+          {errors.floor_number?.message}
           <FormControl margin="normal" fullWidth>
             <InputLabel id="demo-simple-select-label">City</InputLabel>
             <Select
-              {...register("city")}
+              {...register("area")}
               defaultValue=""
               labelId="demo-simple-select-label"
               id="demo-simple-select"
-              name="city"
+              name="area"
               label="City"
+              InputLabelProps={{
+                shrink: true,
+              }}
             >
               {cities?.map((city) => (
                 <MenuItem key={city.id} value={city.name}>
                   {city.name}
                 </MenuItem>
               ))}
+              {/* just for testing */}
+              <MenuItem value="test">test</MenuItem>
             </Select>
           </FormControl>
-          {errors.city?.message}
+          {errors.area?.message}
           <Button
             type="submit"
             fullWidth
