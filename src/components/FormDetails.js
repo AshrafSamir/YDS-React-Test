@@ -98,8 +98,10 @@ const Form = ({ handleSubmit, register, errors, cities }) => {
                   {city.name}
                 </MenuItem>
               ))}
-              {/* just for testing */}
-              <MenuItem value="test">test</MenuItem>
+              <MenuItem value="Minya">Minya</MenuItem>
+              <MenuItem value="Menofya">Menofya</MenuItem>
+              <MenuItem value="Suez">Suez</MenuItem>
+              <MenuItem value="Cairo">Cairo</MenuItem>
             </Select>
           </FormControl>
           {errors.area?.message}

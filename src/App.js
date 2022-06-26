@@ -11,6 +11,7 @@ import {
   addAddress,
   editAddress,
 } from "./utils/ApiActions";
+import { fetchData } from "./utils/ApiMockup";
 import "./App.css";
 
 const schema = yup.object().shape({
@@ -52,26 +53,16 @@ const App = () => {
   };
 
   const handleNewAddress = (newAddress) => {
-    console.log(newAddress, "data");
-
-    //delete id key
-    let tempNewAddress = { ...editAddressValue };
-    var key = "id";
-    delete tempNewAddress[key];
     if (editAddressValue !== null) {
-      //setEditAddressValue should be in .then
-      editAddress(editAddressValue.id, tempNewAddress);
-      setEditAddressValue(null);
+      fetchData("editAddress", newAddress, editAddressValue.id).then((res) => {
+        setAddressList(res);
+        setEditAddressValue(null);
+      });
+    } else {
+      fetchData("addAddress", newAddress).then((res) => {
+        setAddressList(res);
+      });
     }
-
-    //just for testing
-    newAddress && addAddress(newAddress);
-    newAddress && setAddressList([...addressList, newAddress]);
-
-    //It should be like this
-    /*     newAddress && addAddress(newAddress).then((res) => {
-      setAddressList([...addressList, res]);
-    }); */
   };
 
   const handleEdit = (address) => {
@@ -82,35 +73,25 @@ const App = () => {
     setValue("apartment_number", address?.apartment_number);
     setValue("floor_number", address?.floor_number);
     setValue("area", address?.area);
-
-    console.log(address);
   };
 
   const handleDelete = (deletedAddress) => {
-    console.log(deletedAddress);
-
     let newList = addressList.filter(
-      (address) => deletedAddress.floor_number !== address.floor_number
+      (address) => deletedAddress.id !== address.id
     );
-    //just for testing
-    setAddressList(newList);
-
-    //It should be like this
-    /*     deleteAddress(deletedAddress.id).then(() => {
+    fetchData("deleteAddress", deletedAddress).then(() => {
       setAddressList(newList);
-    }); */
+    });
   };
 
-  // res.data should be res
   useEffect(() => {
-    getCities().then((res) => {
+    /*     getCities().then((res) => {
       setCities(res.data);
+    }); */
+    fetchData("addressList").then((res) => {
+      setAddressList(res);
     });
-    getAddressList().then((res) => {
-      console.log(res);
-      setAddressList(res.data);
-    });
-  }, [editAddressValue]);
+  }, [editAddressValue, addressList]);
 
   return (
     <div className="App">
